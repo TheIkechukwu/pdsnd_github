@@ -1,6 +1,8 @@
 import time
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
@@ -135,13 +137,17 @@ def station_stats(df):
     start_time = time.time()
 
     # TO DO: display most commonly used start station
-    
+    popular_start_station = df['Start Station'].mode()[0]
+    print('The most commonly used start station: {}'.format(popular_start_station))
 
     # TO DO: display most commonly used end station
-
+    popular_end_station = df['End Station'].mode()[0]
+    print('The most commonly used end station: {}'.format(popular_end_station))
 
     # TO DO: display most frequent combination of start station and end station trip
-
+    station_combination = df['Start Station'] + ' and ' + df['End Station']
+    common_stations = station_combination.mode()[0]
+    print('Most frequent combination of start station and end station trip: {}'.format(common_stations))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -154,10 +160,12 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     # TO DO: display total travel time
-
+    total_trip_duration = df['Trip Duration'].sum()
+    print('The total trip duration: {} seconds'.format(total_trip_duration))
 
     # TO DO: display mean travel time
-
+    avg_duration = round(df['Trip Duration'].mean())
+    print('The average duration of trips: {}'.format(avg_duration))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -170,18 +178,61 @@ def user_stats(df):
     start_time = time.time()
 
     # TO DO: Display counts of user types
-    user_types = [
+    user_types = df['User Type'].value_counts()
+    print('Counts of User types: \n {}'.format(user_types))
+    print('-'*40)
+    print('Generating plot')
+    #plot_1 = sns.countplot(x = 'User Type', data = df)
+    #plt.title('Number of users per User type')
+    #plt.show()
+    print('-'*40)
 
 
     # TO DO: Display counts of gender
-
+    try:
+        gender = df['Gender'].value_counts()
+        print('Count of user\'s gender: \n {}'.format(gender))
+        print('-'*40)
+        print('Generating plot')
+        
+        #plot_2 = sns.countplot(x = 'Gender', data = df)
+        #plt.title('Number of Male and Female riders')
+        #plt.show()
+    except:
+        print('Oops! There\'s no gender data available for this City')
+    
+    print('-'*40)
 
     # TO DO: Display earliest, most recent, and most common year of birth
-
+     try: 
+        earliest = int(df['Birth Year'].min())
+        most_recent = int(df['Birth Year'].max())
+        most_common = int(df['Birth Year'].mode())
+        print('The earliest user(s) birth year: {}'.format(earliest))
+        print('The most recent user(s) birth year: {}'.format(most_recent))
+        print('The most common user(s) birth year: {}'.format(most_common))
+    except:
+        print('Oops! There\'s no birth year data available for this City')
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def trip_data(df):
+    ''' Prompts the users if they want to see lines of the raw data.'''
+    start = 0
+    stop = 5
+    df_length = len(df)
+    while start < df_length:
+        view_data = input('Would you like to see lines of the raw data used in this analysis? Enter \'Yes\' or \'No\'').lower()
+        if view_data == 'yes':
+            print('Displaying only 5 lines of the data')
+            if stop > df_length:
+                stop = df_length
+            print(df.iloc[start:stop])
+            start += 5
+            stop += 5
+        else:
+            break
 
 def main():
     while True:
@@ -192,7 +243,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-
+        trip_data(df)
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
