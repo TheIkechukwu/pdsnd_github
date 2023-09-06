@@ -1,6 +1,8 @@
 import time
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
@@ -180,9 +182,9 @@ def user_stats(df):
     print('Counts of User types: \n {}'.format(user_types))
     print('-'*40)
     print('Generating plot')
-    plot_1 = sns.countplot(x = 'User Type', data = df)
-    plt.title('Number of users per User type')
-    plt.show()
+    #plot_1 = sns.countplot(x = 'User Type', data = df)
+    #plt.title('Number of users per User type')
+    #plt.show()
     print('-'*40)
 
 
@@ -193,9 +195,9 @@ def user_stats(df):
         print('-'*40)
         print('Generating plot')
         
-        plot_2 = sns.countplot(x = 'Gender', data = df)
-        plt.title('Number of Male and Female riders')
-        plt.show()
+        #plot_2 = sns.countplot(x = 'Gender', data = df)
+        #plt.title('Number of Male and Female riders')
+        #plt.show()
     except:
         print('Oops! There\'s no gender data available for this City')
     
