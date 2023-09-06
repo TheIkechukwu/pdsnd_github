@@ -176,14 +176,41 @@ def user_stats(df):
     start_time = time.time()
 
     # TO DO: Display counts of user types
-    user_types = [
+    user_types = df['User Type'].value_counts()
+    print('Counts of User types: \n {}'.format(user_types))
+    print('-'*40)
+    print('Generating plot')
+    plot_1 = sns.countplot(x = 'User Type', data = df)
+    plt.title('Number of users per User type')
+    plt.show()
+    print('-'*40)
 
 
     # TO DO: Display counts of gender
-
+    try:
+        gender = df['Gender'].value_counts()
+        print('Count of user\'s gender: \n {}'.format(gender))
+        print('-'*40)
+        print('Generating plot')
+        
+        plot_2 = sns.countplot(x = 'Gender', data = df)
+        plt.title('Number of Male and Female riders')
+        plt.show()
+    except:
+        print('Oops! There\'s no gender data available for this City')
+    
+    print('-'*40)
 
     # TO DO: Display earliest, most recent, and most common year of birth
-
+     try: 
+        earliest = int(df['Birth Year'].min())
+        most_recent = int(df['Birth Year'].max())
+        most_common = int(df['Birth Year'].mode())
+        print('The earliest user(s) birth year: {}'.format(earliest))
+        print('The most recent user(s) birth year: {}'.format(most_recent))
+        print('The most common user(s) birth year: {}'.format(most_common))
+    except:
+        print('Oops! There\'s no birth year data available for this City')
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
