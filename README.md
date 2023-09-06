@@ -14,5 +14,6 @@ Interactive descriptive statistics on bike share system in 3 major cities in the
 * washington.csv
 
 ### Credits
-Udacity
+* Udacity
+* w3schools
 
